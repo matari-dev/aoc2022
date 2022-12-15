@@ -79,11 +79,17 @@ def get_views(row, col, tree):
 # each direction from the tree being evaluated
 for rowIdx, df_row in df.iterrows():
     for colIdx, val in df_row.items():
+        # the sides don't have to be evaluated
+        if rowIdx in (0, side):
+            continue
+        if colIdx in (0, side):
+            continue
         curr_row = rowIdx
         curr_col = colIdx
         curr_tree = val
         # this print line is to let me know of the progress
-        print(f'row: {curr_row:3} col: {curr_col:3}', end='\r')
+        # skipping the print statement saves time
+        # print(f'row: {curr_row:3} col: {curr_col:3}', end='\r')
         views = get_views(curr_row, curr_col, curr_tree)
         score = reduce(lambda a, b: a * b, views)
         if score > top_score:
